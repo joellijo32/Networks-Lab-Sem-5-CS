@@ -23,7 +23,7 @@ Networks-Lab-Sem-5-CS/
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/<your-username>/Networks-Lab-Sem-5-CS.git
+   git clone https://github.com/joellijo32/Networks-Lab-Sem-5-CS.git
    cd Networks-Lab-Sem-5-CS
    ```
 
