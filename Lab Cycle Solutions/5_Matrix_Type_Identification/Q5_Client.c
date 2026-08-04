@@ -8,7 +8,7 @@
 int main(){
 	int socketFD = socket(AF_INET, SOCK_STREAM, 0);
 
-	char* ip = "235.3.42.1";
+	char* ip = "192.178.24.142";
 	struct sockaddr_in address ;
 	address.sin_family = AF_INET;
 	address.sin_port = 2000;
