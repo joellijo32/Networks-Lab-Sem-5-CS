@@ -65,11 +65,14 @@ int main() {
     int matrix[n][n];
     read(newsock, &matrix, sizeof(matrix));
 
-    int result = checkMatrix(n, matrix);
+    int result = checkMatrix(n, matrix); char* output = "";
+
     printf("The matrix recieved is: ");
-    if(result == 0) printf("Upper Triangle\n");
-    else if(result == 1) printf("Lower Triangle\n");
-    else printf("Diagonal Matrix\n");
+    if(result == 0) output = "Upper Traingle";
+    else if(result == 1) output = "Lower Triangle";
+    else output = "Diagonal";
+
+    send(newsock, output, strlen(output), 0);
 
     close(newsock);
     close(sockFD);
