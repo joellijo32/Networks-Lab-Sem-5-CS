@@ -20,3 +20,4 @@ First start the server, then open a new terminal to run the client:
 ```bash
 ./client
 ```
+(The 'Socket programming.pdf' contains references to the functions and other api calls).
