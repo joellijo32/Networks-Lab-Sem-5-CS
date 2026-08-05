@@ -110,11 +110,12 @@ int main() {
     scanf("%d", &n);
     int matrix[n][n];
     fillRandom(n, matrix);
-	printf("\nMatrix Sent from client: \n");
-	display(n, matrix);
+    printf("\nMatrix Sent from client: \n");
+    display(n, matrix);
 
-	send(sockFD, &n, sizeof(n), 0);
-	send(sockFD, matrix, sizeof(matrix), 0);
+    send(sockFD, &n, sizeof(n), 0);
+    send(sockFD, matrix, sizeof(matrix), 0);
     close(sockFD);
+
     return 0;
 }
