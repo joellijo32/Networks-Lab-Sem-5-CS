@@ -101,20 +101,27 @@ int main() {
 
     read(sockFD, buffer, sizeof(buffer));
 
-    printf("Message from server: %s\n", buffer);
+    printf("Message from Server: %s\n", buffer);
 
     memset(buffer, 0, sizeof(buffer));
 
     srand(time(NULL));
     printf("Enter N = "); int n;
     scanf("%d", &n);
+
     int matrix[n][n];
     fillRandom(n, matrix);
-    printf("\nMatrix Sent from client: \n");
+
+    printf("\nMatrix Sent from Client: \n");
     display(n, matrix);
 
     send(sockFD, &n, sizeof(n), 0);
     send(sockFD, matrix, sizeof(matrix), 0);
+
+    char output[1024];
+    read(sockFD, output, sizeof(output));
+    printf("\nMessage from Server: %s Matrix\n", output);
+
     close(sockFD);
 
     return 0;
