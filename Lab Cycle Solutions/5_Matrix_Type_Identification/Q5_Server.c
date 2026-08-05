@@ -30,11 +30,9 @@ int main() {
     socklen_t len = sizeof(client);
 
     char buffer[1024];
-//    char* ip = "192.168.1.5";
     address.sin_family = AF_INET;
     address.sin_port = htons(2095);
     address.sin_addr.s_addr = INADDR_ANY;
-//	inet_pton(AF_INET, ip, &address.sin_addr.s_addr);
 
     if (bind(sockFD, (struct sockaddr *)&address, sizeof(address)) < 0) {
         perror("Bind failed");
@@ -62,17 +60,16 @@ int main() {
 
     send(newsock, "Hello from server", 17, 0);
 
-	int n;
-	read(newsock, &n, sizeof(n));
-	int matrix[n][n];
-	read(newsock, &matrix, sizeof(matrix));
+    int n;
+    read(newsock, &n, sizeof(n));
+    int matrix[n][n];
+    read(newsock, &matrix, sizeof(matrix));
 
-	int result = checkMatrix(n, matrix);
-	printf("The matrix recieved is: ");
-	if(result == 0) printf("Upper Triangle\n");
-	else if(result == 1) printf("Lower Triangle\n");
-	else printf("Diagonal Matrix\n");
-
+    int result = checkMatrix(n, matrix);
+    printf("The matrix recieved is: ");
+    if(result == 0) printf("Upper Triangle\n");
+    else if(result == 1) printf("Lower Triangle\n");
+    else printf("Diagonal Matrix\n");
 
     close(newsock);
     close(sockFD);
