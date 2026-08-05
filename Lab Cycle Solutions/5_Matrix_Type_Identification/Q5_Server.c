@@ -65,12 +65,15 @@ int main() {
     int matrix[n][n];
     read(newsock, &matrix, sizeof(matrix));
 
+    printf("\nMatrix recieved from Client\n");
+
     int result = checkMatrix(n, matrix);
     char output[1024];
 
     if(result == 0) strcpy(output, "Upper Triangle");
     else if(result == 1) strcpy(output, "Lower Triangle");
     else strcpy(output,"Diagonal");
+    printf("\nSending output: \"%s\" to Client\n", output);
 
     send(newsock, output, strlen(output), 0);
 
