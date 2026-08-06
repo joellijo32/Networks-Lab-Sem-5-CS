@@ -120,7 +120,7 @@ int main() {
 
     char output[1024];
     read(sockFD, output, sizeof(output));
-    printf("\nMessage from Server: %s Matrix\n", output);
+    printf("\nMessage from Server: %s\n", output);
 
     close(sockFD);
 
