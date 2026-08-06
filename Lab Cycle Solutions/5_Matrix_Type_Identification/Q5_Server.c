@@ -70,9 +70,9 @@ int main() {
     int result = checkMatrix(n, matrix);
     char output[1024];
 
-    if(result == 0) strcpy(output, "Upper Triangle");
-    else if(result == 1) strcpy(output, "Lower Triangle");
-    else strcpy(output,"Diagonal");
+    if(result == 0) strcpy(output, "Upper Triangle Matrix");
+    else if(result == 1) strcpy(output, "Lower Triangle Matrix");
+    else strcpy(output,"Diagonal Matrix");
     printf("\nSending output: \"%s\" to Client\n", output);
 
     send(newsock, output, strlen(output), 0);
