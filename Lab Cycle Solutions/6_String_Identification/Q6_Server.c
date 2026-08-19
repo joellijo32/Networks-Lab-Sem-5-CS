@@ -8,7 +8,7 @@
 #define BUFFER_SIZE 1024
 
 void translate(char* buffer){
-	char result[1024], word[100];
+	char result[1024] = {0}, word[100];
 	int i = 0, j = 0;
 	while(buffer[i] != '\0'){
 		if(isalpha(buffer[i])){
