@@ -84,7 +84,6 @@ int main(){
 
 	printf("Message from client: %s\n", buffer);
 
-// 	send(newsock, "Hello from server", 17, 0);
 	sendto(sock_fd, "Hello from server", 17, 0,
                (struct sockaddr *)&client_addr, client_len);
 
