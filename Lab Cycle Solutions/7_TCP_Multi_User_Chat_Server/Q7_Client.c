@@ -2,53 +2,63 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
 #include <arpa/inet.h>
-#include <time.h>
+#include <sys/socket.h>
+#include <pthread.h>
+#define BUFFER_SIZE 1024
 
+
+int sock;
+struct sockaddr_in addr;
+char buffer[BUFFER_SIZE] = {0};
+
+void* handle_chat(void *varg) {
+    while(1) {
+        char buff[BUFFER_SIZE];
+        memset(buff, 0, sizeof(buff));
+        int valread = read(sock, buff, BUFFER_SIZE);
+        printf("Server said: %s\n", buff);
+    }
+}
 
 int main() {
+    int PORT;
+    printf("Enter PORT: ");
+    scanf(" %d", &PORT);
 
-    int sockFD = socket(AF_INET, SOCK_STREAM, 0);
-
-    if (sockFD < 0) {
-        perror("Socket creation failed");
-        return 1;
+    sock = socket(AF_INET, SOCK_STREAM, 0);
+    if(sock == -1) {
+        perror("Socket failed to open");
+        exit(1);
     }
 
-    struct sockaddr_in address;
+    addr.sin_family = AF_INET;
+    addr.sin_port = htons(PORT);
 
-    address.sin_family = AF_INET;
-    address.sin_port = htons(2095);
-    address.sin_addr.s_addr = inet_addr("127.0.0.1");
-
-    int status = connect(sockFD, (struct sockaddr *)&address, sizeof(address));
-
-    if (status < 0) {
-        perror("Connection failed");
-        close(sockFD);
-        return 1;
+    if(inet_pton(AF_INET, "127.0.0.1", &addr.sin_addr) <= 0) {
+        perror("Invalid address");
+        exit(1);
     }
 
-    printf("Connection was successful...\n");
+    if(connect(sock, (struct sockaddr*) &addr, sizeof(addr)) < 0) {
+        perror("Connect failed");
+        exit(1);
+    }
 
-    char buffer[1024] = "Hello from client";
+     pthread_t th_id;
+     pthread_create(&th_id, NULL, handle_chat, NULL);
 
-    send(sockFD, buffer, strlen(buffer), 0);
+    while(1) {
+        char msg[BUFFER_SIZE];
+        printf("> ");
+        scanf(" %[^\n]", msg);
+        printf("MSG: %s | len = %ld\n", msg, strlen(msg));
+        send(sock, msg, strlen(msg), 0);
 
-    memset(buffer, 0, sizeof(buffer));
+    }
 
-    read(sockFD, buffer, sizeof(buffer));
-
-    printf("Message from Server: %s\n", buffer);
-
-    memset(buffer, 0, sizeof(buffer));
-
-   /* ---------*/
-
-    close(sockFD);
+    pthread_join(th_id, NULL);
+    close(sock);
 
     return 0;
 }
