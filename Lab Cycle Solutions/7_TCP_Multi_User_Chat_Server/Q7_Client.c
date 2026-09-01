@@ -5,20 +5,26 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 #include <pthread.h>
-#define BUFFER_SIZE 1024
 
+#define BUFFER_SIZE 1024
 
 int sock;
 struct sockaddr_in addr;
-char buffer[BUFFER_SIZE] = {0};
 
 void* handle_chat(void *varg) {
-    while(1) {
-        char buff[BUFFER_SIZE];
+    char buff[BUFFER_SIZE];
+    while (1) {
         memset(buff, 0, sizeof(buff));
-        int valread = read(sock, buff, BUFFER_SIZE);
-        printf("Server said: %s\n", buff);
+        int valread = read(sock, buff, BUFFER_SIZE - 1);
+        if (valread <= 0) {
+            printf("\nDisconnected from server.\n");
+            exit(0);
+        }
+        printf("%s\n", buff);
+        printf("> ");
+        fflush(stdout);
     }
+    return NULL;
 }
 
 int main() {
@@ -27,7 +33,7 @@ int main() {
     scanf(" %d", &PORT);
 
     sock = socket(AF_INET, SOCK_STREAM, 0);
-    if(sock == -1) {
+    if (sock == -1) {
         perror("Socket failed to open");
         exit(1);
     }
@@ -35,30 +41,33 @@ int main() {
     addr.sin_family = AF_INET;
     addr.sin_port = htons(PORT);
 
-    if(inet_pton(AF_INET, "127.0.0.1", &addr.sin_addr) <= 0) {
+    if (inet_pton(AF_INET, "127.0.0.1", &addr.sin_addr) <= 0) {
         perror("Invalid address");
         exit(1);
     }
 
-    if(connect(sock, (struct sockaddr*) &addr, sizeof(addr)) < 0) {
+    if (connect(sock, (struct sockaddr*) &addr, sizeof(addr)) < 0) {
         perror("Connect failed");
         exit(1);
     }
 
-     pthread_t th_id;
-     pthread_create(&th_id, NULL, handle_chat, NULL);
+    // Prompt and send username as the first message
+    char username[64];
+    printf("Enter your username: ");
+    scanf(" %63s", username);
+    send(sock, username, strlen(username), 0);
 
-    while(1) {
+    pthread_t th_id;
+    pthread_create(&th_id, NULL, handle_chat, NULL);
+
+    while (1) {
         char msg[BUFFER_SIZE];
         printf("> ");
         scanf(" %[^\n]", msg);
-        printf("MSG: %s | len = %ld\n", msg, strlen(msg));
         send(sock, msg, strlen(msg), 0);
-
     }
 
     pthread_join(th_id, NULL);
     close(sock);
-
     return 0;
 }
