@@ -28,12 +28,11 @@ void broadcast_message(char *msg, int sender_fd) {
 
 void* handle_client(void* arg) {
     int client_fd = *(int*)arg;
-    free(arg); // Free the memory allocated in main
+    free(arg);
 
     char buffer[BUFFER_SIZE];
     char name_buffer[64];
 
-    // 1. First recv: get the username
     memset(name_buffer, 0, sizeof(name_buffer));
     int name_bytes = recv(client_fd, name_buffer, sizeof(name_buffer) - 1, 0);
     if (name_bytes <= 0) {
@@ -41,7 +40,6 @@ void* handle_client(void* arg) {
         return NULL;
     }
 
-    // 2. Store client_name safely in the array
     pthread_mutex_lock(&lock);
     for (int i = 0; i < MAX_CLIENTS; i++) {
         if (client_sockets[i].client == client_fd) {
@@ -51,19 +49,16 @@ void* handle_client(void* arg) {
     }
     pthread_mutex_unlock(&lock);
 
-    // Announce client joined
     char join_msg[BUFFER_SIZE];
     snprintf(join_msg, sizeof(join_msg), "[Server] %s has joined the chat.", name_buffer);
     printf("%s\n", join_msg);
     broadcast_message(join_msg, client_fd);
 
-    // 3. Normal chat loop
     while (1) {
         memset(buffer, 0, BUFFER_SIZE);
         int bytes_received = recv(client_fd, buffer, BUFFER_SIZE - 1, 0);
 
         if (bytes_received <= 0) {
-            // Client disconnected: cleanup and notify
             char leave_msg[BUFFER_SIZE];
             snprintf(leave_msg, sizeof(leave_msg), "[Server] %s has left the chat.", name_buffer);
             printf("%s\n", leave_msg);
@@ -84,7 +79,6 @@ void* handle_client(void* arg) {
             break;
         }
 
-        // Format message as "Username: message"
         char formatted_msg[BUFFER_SIZE + 80];
         snprintf(formatted_msg, sizeof(formatted_msg), "%s: %s", name_buffer, buffer);
         printf("%s\n", formatted_msg);
@@ -147,7 +141,6 @@ int main() {
             printf("Max clients reached! Connection rejected.\n");
             close(client_fd);
         } else {
-            // Allocate memory for thread argument to avoid race conditions
             int *new_sock = malloc(sizeof(int));
             *new_sock = client_fd;
 
