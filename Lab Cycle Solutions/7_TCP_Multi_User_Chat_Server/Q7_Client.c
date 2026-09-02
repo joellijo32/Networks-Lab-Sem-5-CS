@@ -51,7 +51,6 @@ int main() {
         exit(1);
     }
 
-    // Prompt and send username as the first message
     char username[64];
     printf("Enter your username: ");
     scanf(" %63s", username);
