@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <arpa/inet.h>
-#include <strings.h>
+#include <string.h>
 #include <sys/types.h>
 #include <sys/socket.h>
 #include <netinet/in.h>
@@ -27,7 +27,7 @@ int main (void) {
 	}
 
 	server_addr.sin_addr.s_addr = INADDR_ANY;
-	server_addr.port = htons(port);
+	server_addr.sin_port = htons(port);
 	server_addr.sin_family = AF_INET;
 
 	if (bind(sock_fd, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
@@ -49,7 +49,7 @@ int main (void) {
 
 	memset(buffer, 0, sizeof(buffer));
 
-	recvfron(sock_fd, buffer, BUFFER_SIZE, 0, (struct sockaddr*)&client_addr, &client_len);
+	recvfrom(sock_fd, buffer, BUFFER_SIZE, 0, (struct sockaddr*)&client_addr, &client_len);
 
 	printf("%s from client\n", buffer);
 
