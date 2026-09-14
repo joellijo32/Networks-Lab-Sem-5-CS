@@ -53,6 +53,16 @@ int main (void) {
 
 	printf("%s from client\n", buffer);
 
+	time_t raw_time; time(&raw_time);
+
+	printf("\nSending current time: %s", ctime(&raw_time));
+
+	memset(buffer, 0, sizeof(buffer));
+
+	sendto(sock_fd, ctime(&raw_time), BUFFER_SIZE, 0, (struct sockaddr*)&client_addr, client_len);
+
+	memset(buffer, 0, sizeof(buffer));
+
 	close(sock_fd);
 	return 0;
 }
