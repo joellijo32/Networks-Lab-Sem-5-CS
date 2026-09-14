@@ -39,6 +39,18 @@ int main (void) {
 
 	memset(buffer, 0, sizeof(buffer));
 
+	printf("\nRequesting server for system time...\n");
+
+	sendto(sock_fd, "TIME_REQUEST", 12, 0, (struct sockaddr*)NULL, sizeof(server_addr));
+
+	memset(buffer, 0, sizeof(buffer));
+
+	recvfrom(sock_fd, buffer, sizeof(buffer), 0, (struct sockaddr*)NULL, NULL);
+
+	printf("\nResponse from server: %s\n", buffer);
+
+	memset(buffer, 0, sizeof(buffer));
+
 	close(sock_fd);
 	return 0;
 }
