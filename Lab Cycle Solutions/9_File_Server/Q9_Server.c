@@ -5,9 +5,8 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 
+#define PORT 25553
 #define BUFFER_SIZE 256
-
-int port;
 
 void handle_client(int client_sock) {
     char buffer[BUFFER_SIZE];
@@ -46,8 +45,6 @@ int main() {
     struct sockaddr_in server_addr, client_addr;
     socklen_t addr_size;
 
-    printf("Enter port: "); scanf("%d", &port);
-
     server_sock = socket(AF_INET, SOCK_STREAM, 0);
     if (server_sock < 0) {
         perror("Socket creation failed");
@@ -56,7 +53,7 @@ int main() {
 
     server_addr.sin_family = AF_INET;
     server_addr.sin_addr.s_addr = INADDR_ANY;
-    server_addr.sin_port = htons(port);
+    server_addr.sin_port = htons(PORT);
 
     if (bind(server_sock, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
         perror("Bind failed");
@@ -68,7 +65,7 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    printf("Concurrent File Server started on port %d...\n", port);
+    printf("Concurrent File Server started on port %d...\n", PORT);
 
     while (1) {
         addr_size = sizeof(client_addr);
