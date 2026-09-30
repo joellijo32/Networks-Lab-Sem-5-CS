@@ -4,17 +4,14 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
+#define PORT 25553
 #define BUFFER_SIZE 256
-
-int port;
 
 int main() {
     int sock;
     struct sockaddr_in serv_addr;
     char buffer[BUFFER_SIZE];
     char filename[BUFFER_SIZE];
-
-    printf("Enter port: "); scanf("%d", &port);
 
     sock = socket(AF_INET, SOCK_STREAM, 0);
     if (sock < 0) {
@@ -23,7 +20,7 @@ int main() {
     }
 
     serv_addr.sin_family = AF_INET;
-    serv_addr.sin_port = htons(port);
+    serv_addr.sin_port = htons(PORT);
 
     if (inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr) <= 0) {
         printf("\nInvalid address/ Address not supported \n");
