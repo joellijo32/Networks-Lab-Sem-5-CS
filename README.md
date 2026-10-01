@@ -6,11 +6,13 @@ Computer Networks Lab coursework for Semester 5 (CS). This repository contains l
 
 ```
 Networks-Lab-Sem-5-CS/
-├── Lab Cycle Solutions/
+├── Lab Cycle Solutions/ 
+├── references/
 └── Networks Lab Cycle.pdf
 ```
 
 - **Lab Cycle Solutions/** — Solved lab exercises.
+- **references/** — Reference documents 
 - **Networks Lab Cycle.pdf** — The lab cycle questions document.
 
 ## Getting Started
@@ -30,5 +32,19 @@ Networks-Lab-Sem-5-CS/
 2. Open `Networks Lab Cycle.pdf` to view the lab assignment questions.
 
 3. Refer to the solution files under `Lab Cycle Solutions/` for each topic.
+
+4. Compile both client and server files (Questions 5 - 10, eg: Q5_Server.c, Q5_Client.c), Run server object in terminal 1 and client object in terminal 2.
+
+    ```bash
+    gcc Qx_Server.c -o server ; gcc Qx_Client.c -o client
+    ```
+    Terminal 1
+    ```bash
+    ./server
+    ```
+    Terminal 2
+    ```bash
+    ./client
+    ```
 
 Made by Joel Lijo Mathew.
