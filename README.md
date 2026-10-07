@@ -38,6 +38,8 @@ Networks-Lab-Sem-5-CS/
     ```bash
     gcc Qx_Server.c -o server ; gcc Qx_Client.c -o client
     ```
+    (where x is the question number)
+   
     Terminal 1:
     ```bash
     ./server
