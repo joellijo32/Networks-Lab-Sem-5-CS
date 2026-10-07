@@ -33,16 +33,16 @@ Networks-Lab-Sem-5-CS/
 
 3. Refer to the solution files under `Lab Cycle Solutions/` for each topic.
 
-4. For Questions 5 - 10, compile both client and server files (eg: `Q5_Server.c` & `Q5_Client.c`) and run `server` object in terminal 1 and `client` object in terminal 2.
+4. For Questions 5 - 10, compile both client and server files (eg: `Q5_Server.c` & `Q5_Client.c`) and run `server` object in terminal 1 and `client` object in terminal 2:
 
     ```bash
     gcc Qx_Server.c -o server ; gcc Qx_Client.c -o client
     ```
-    Terminal 1
+    Terminal 1:
     ```bash
     ./server
     ```
-    Terminal 2
+    Terminal 2:
     ```bash
     ./client
     ```
