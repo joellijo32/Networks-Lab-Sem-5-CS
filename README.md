@@ -29,7 +29,7 @@ Networks-Lab-Sem-5-CS/
    cd Networks-Lab-Sem-5-CS
    ```
 
-2. Open `Networks Lab Cycle.pdf` to view the lab assignment questions.
+2. Open `Networks_Lab_Cycle.pdf` to view the lab assignment questions.
 
 3. Refer to the solution files under `Lab_Cycle_Solutions/` for each topic.
 
