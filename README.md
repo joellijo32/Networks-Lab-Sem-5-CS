@@ -6,14 +6,14 @@ Computer Networks Lab coursework for Semester 5 (CS). This repository contains l
 
 ```
 Networks-Lab-Sem-5-CS/
-├── Lab Cycle Solutions/ 
+├── Lab_Cycle_Solutions/ 
 ├── references/
-└── Networks Lab Cycle.pdf
+└── Networks_Lab_Cycle.pdf
 ```
 
-- **Lab Cycle Solutions/** — Solved lab exercises.
+- **Lab_Cycle_Solutions/** — Solved lab exercises.
 - **references/** — Reference documents 
-- **Networks Lab Cycle.pdf** — The lab cycle questions document.
+- **Networks_Lab_Cycle.pdf** — The lab cycle questions document.
 
 ## Getting Started
 
