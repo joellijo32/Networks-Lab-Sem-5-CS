@@ -82,7 +82,7 @@ int main(){
 	recvfrom(sock_fd, buffer, BUFFER_SIZE, 0,
                  (struct sockaddr *)&client_addr, &client_len);
 
-	printf("Message from client: %s\n", buffer);
+	printf("\nMessage from client: %s\n", buffer);
 
 	sendto(sock_fd, "Hello from server", 17, 0,
                (struct sockaddr *)&client_addr, client_len);
@@ -92,11 +92,17 @@ int main(){
 	recvfrom(sock_fd, buffer, BUFFER_SIZE, 0,
                  (struct sockaddr *)&client_addr, &client_len);
 
+	printf("\nMessage from client: %s\n", buffer);
+
 	translate(buffer);
 	buffer[strlen(buffer)] = '\0';
+
+	printf("\nTranslated message sent to client: %s\n", buffer);
+
 	sendto(sock_fd, buffer, strlen(buffer) + 1, 0,
                (struct sockaddr *)&client_addr, client_len);
 
 	close(sock_fd);
 
+	printf("\nClient disconnected...\n");
 }
