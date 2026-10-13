@@ -7,6 +7,8 @@
 
 #define BUFFER_SIZE 1024
 
+int port;
+
 void translate(char* buffer){
 	char result[1024] = {0}, word[100];
 	int i = 0, j = 0;
@@ -64,9 +66,11 @@ int main(){
 	struct sockaddr_in address, client_addr;
 	socklen_t client_len = sizeof(client_addr);
 
+	printf("Enter port: "); scanf("%d", &port);
+
 	char buffer[1024];
 	address.sin_family = AF_INET;
-	address.sin_port = htons(8746);
+	address.sin_port = htons(port);
 	address.sin_addr.s_addr = INADDR_ANY;
 
 	if(bind(sock_fd, (struct sockaddr *)&address, sizeof(address)) < 0){
@@ -92,12 +96,12 @@ int main(){
 	recvfrom(sock_fd, buffer, BUFFER_SIZE, 0,
                  (struct sockaddr *)&client_addr, &client_len);
 
-	printf("\nMessage from client: %s\n", buffer);
+	printf("\nMessage from client: \"%s\"\n", buffer);
 
 	translate(buffer);
 	buffer[strlen(buffer)] = '\0';
 
-	printf("\nTranslated message sent to client: %s\n", buffer);
+	printf("\nTranslated message sent to client: \"%s\"\n", buffer);
 
 	sendto(sock_fd, buffer, strlen(buffer) + 1, 0,
                (struct sockaddr *)&client_addr, client_len);
