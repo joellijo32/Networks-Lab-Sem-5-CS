@@ -5,8 +5,9 @@
 #include <arpa/inet.h>
 #include <sys/socket.h>
 
-#define PORT 25553
 #define BUFFER_SIZE 256
+
+int port;
 
 void handle_client(int client_sock) {
     char buffer[BUFFER_SIZE];
@@ -18,6 +19,9 @@ void handle_client(int client_sock) {
         close(client_sock);
         exit(0);
     }
+
+    printf("\nIncoming request for file: \"%s\"\n", filename);
+
     filename[n] = '\0';
     filename[strcspn(filename, "\r\n")] = 0; 
 
@@ -25,6 +29,7 @@ void handle_client(int client_sock) {
     if (f == NULL) {
         snprintf(buffer, sizeof(buffer), "[Server PID: %d] Error: File '%.100s' not found.\n", pid, filename);
         write(client_sock, buffer, strlen(buffer));
+	printf("\nError: File \"%.100s\" not found.\n", filename);
     } else {
         snprintf(buffer, sizeof(buffer), "[Server PID: %d] File Contents:\n----------------------------------------\n", pid);
         write(client_sock, buffer, strlen(buffer));
@@ -34,6 +39,7 @@ void handle_client(int client_sock) {
             write(client_sock, buffer, bytes_read);
         }
         fclose(f);
+	printf("\nFile: \"%s\" sent to client.\n", filename);
     }
 
     close(client_sock);
@@ -51,9 +57,11 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
+    printf("Enter port: "); scanf("%d", &port);
+
     server_addr.sin_family = AF_INET;
     server_addr.sin_addr.s_addr = INADDR_ANY;
-    server_addr.sin_port = htons(PORT);
+    server_addr.sin_port = htons(port);
 
     if (bind(server_sock, (struct sockaddr*)&server_addr, sizeof(server_addr)) < 0) {
         perror("Bind failed");
@@ -65,7 +73,7 @@ int main() {
         exit(EXIT_FAILURE);
     }
 
-    printf("Concurrent File Server started on port %d...\n", PORT);
+    printf("File Server started on port %d...\n", port);
 
     while (1) {
         addr_size = sizeof(client_addr);
@@ -84,5 +92,7 @@ int main() {
     }
 
     close(server_sock);
+
+    printf("\nClient disconnected...\n");
     return 0;
 }

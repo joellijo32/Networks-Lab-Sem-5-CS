@@ -4,8 +4,9 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
-#define PORT 25553
 #define BUFFER_SIZE 256
+
+int port ;
 
 int main() {
     int sock;
@@ -19,8 +20,11 @@ int main() {
         return -1;
     }
 
+    printf("Enter port: "); scanf("%d", &port);
+    getchar();
+
     serv_addr.sin_family = AF_INET;
-    serv_addr.sin_port = htons(PORT);
+    serv_addr.sin_port = htons(port);
 
     if (inet_pton(AF_INET, "127.0.0.1", &serv_addr.sin_addr) <= 0) {
         printf("\nInvalid address/ Address not supported \n");
