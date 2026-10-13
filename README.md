@@ -50,4 +50,6 @@ Networks-Lab-Sem-5-CS/
     ./client
     ```
 
-Made by Joel Lijo Mathew.
+## Contributors...♥️
+1. [Ameen P J](github.com/ameen-pj)
+2. [Joel Lijo Mathew](github.com/joellijo32)
