@@ -7,6 +7,8 @@
 
 #define BUFFER_SIZE 1024
 
+int port;
+
 int main(){
 	char buffer[1024];
 	struct sockaddr_in server_addr;
@@ -14,8 +16,10 @@ int main(){
 
 	int sockfd = socket(AF_INET, SOCK_DGRAM, 0);
 
+	printf("Enter port: "); scanf("%d", &port); getchar();
+
 	server_addr.sin_family = AF_INET;
-	server_addr.sin_port = htons(8746);
+	server_addr.sin_port = htons(port);
 	server_addr.sin_addr.s_addr = inet_addr("127.0.0.1");
 
 	sendto(sockfd, "Hello from Client...", 20, 0,
