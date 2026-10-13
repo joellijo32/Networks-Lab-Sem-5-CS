@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <arpa/inet.h>
 
+int port;
+
 int checkMatrix(int n, int matrix[][n]){
 	int isUpper = 1, isLower = 1, isDiagonal = 1;
 	for(int i = 0; i < n; i++){
@@ -18,6 +20,14 @@ int checkMatrix(int n, int matrix[][n]){
 	else if(isLower) return 1;
 }
 
+void display(int n, int matrix[][n]) {
+	for (int i = 0; i < n; i++) {
+		for (int j = 0; j < n; j++) {
+			printf("%d ", matrix[i][j]);
+		} printf("\n");
+	}
+}
+
 int main() {
     int sockFD = socket(AF_INET, SOCK_STREAM, 0);
 
@@ -29,9 +39,11 @@ int main() {
     struct sockaddr_in address, client;
     socklen_t len = sizeof(client);
 
+    printf("Enter Port: "); scanf("%d", &port);
+
     char buffer[1024];
     address.sin_family = AF_INET;
-    address.sin_port = htons(2095);
+    address.sin_port = htons(port);
     address.sin_addr.s_addr = INADDR_ANY;
 
     if (bind(sockFD, (struct sockaddr *)&address, sizeof(address)) < 0) {
@@ -65,7 +77,9 @@ int main() {
     int matrix[n][n];
     read(newsock, &matrix, sizeof(matrix));
 
-    printf("\nMatrix recieved from Client\n");
+    printf("\nMatrix recieved from Client:\n");
+
+    display(n, matrix);
 
     int result = checkMatrix(n, matrix);
     char output[1024];
@@ -79,6 +93,8 @@ int main() {
 
     close(newsock);
     close(sockFD);
+
+    printf("\nClient disconnected...\n");
 
     return 0;
 }

@@ -8,6 +8,8 @@
 #include <arpa/inet.h>
 #include <time.h>
 
+int port;
+
 void fillLower(int n, int matrix[][n]);
 void fillDiagonal(int n, int matrix[][n]);
 void fillUpper(int n, int matrix[][n]);
@@ -79,8 +81,10 @@ int main() {
 
     struct sockaddr_in address;
 
+    printf("Enter Port: "); scanf("%d", &port);
+
     address.sin_family = AF_INET;
-    address.sin_port = htons(2095);
+    address.sin_port = htons(port);
     address.sin_addr.s_addr = inet_addr("127.0.0.1");
 
     int status = connect(sockFD, (struct sockaddr *)&address, sizeof(address));
