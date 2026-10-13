@@ -51,5 +51,5 @@ Networks-Lab-Sem-5-CS/
     ```
 
 ## Contributors...♥️
-1. [Ameen P J](github.com/ameen-pj)
-2. [Joel Lijo Mathew](github.com/joellijo32)
+1. [Ameen P J](https://www.github.com/ameen-pj)
+2. [Joel Lijo Mathew](https://www.github.com/joellijo32)
