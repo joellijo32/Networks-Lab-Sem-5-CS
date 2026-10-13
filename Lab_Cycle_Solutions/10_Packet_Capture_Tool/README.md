@@ -17,7 +17,7 @@
 
 4. Run the program in background & generate traffic (in the same terminal)
 	```bash
-	./capture
+	./capture &
 	ping -c 1 127.0.0.1
 	```
 
