@@ -64,5 +64,7 @@ int main (void) {
 	memset(buffer, 0, sizeof(buffer));
 
 	close(sock_fd);
+
+	printf("\nClient disconnected...\n");
 	return 0;
 }
