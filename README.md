@@ -2,6 +2,8 @@
 
 Computer Networks Lab coursework for Semester 5 (CS). This repository contains lab cycle solutions and manuals for the networking lab.
 
+> For Packet Tracer Questions 13 - 17, the `.pkt` files are compatible for Packet Tracer version: `8.2.2+` 
+
 ## Repository Structure
 
 ```
@@ -49,8 +51,6 @@ Networks-Lab-Sem-5-CS/
     ```bash
     ./client
     ```
-
-> For Packet Tracer Questions 13 - 17, the `.pkt` files are compactible for Packet Tracer version: `8.2.2.x` only, hence not compactible for later versions
 
 ## Contributors...♥️
 1. [Ameen P J](https://www.github.com/ameen-pj)
