@@ -50,6 +50,8 @@ Networks-Lab-Sem-5-CS/
     ./client
     ```
 
+> For Packet Tracer Questions 13 - 17, the `.pkt` files are compactible for Packet Tracer version: `8.2.2.x` only, hence not compactible for later versions
+
 ## Contributors...♥️
 1. [Ameen P J](https://www.github.com/ameen-pj)
 2. [Joel Lijo Mathew](https://www.github.com/joellijo32)
