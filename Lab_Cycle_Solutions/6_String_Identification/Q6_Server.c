@@ -6,9 +6,7 @@
 #include <string.h>
 
 #define BUFFER_SIZE 1024
-
 int port;
-
 void translate(char* buffer){
 	char result[1024] = {0}, word[100];
 	int i = 0, j = 0;
@@ -18,9 +16,7 @@ void translate(char* buffer){
 			while(isalpha(buffer[i])){
 				word[j++] = buffer[i++];
 			}
-			word[j] = '\0';
-			i--;
-
+			word[j] = '\0'; i--;
 			if(strcmp(word, "tbh") == 0){
 				strcpy(word, "to be honest");
 			} else if(strcmp(word, "ig") == 0){
@@ -44,7 +40,6 @@ void translate(char* buffer){
 			} else if(strcmp(word, "nvm") == 0){
 				strcpy(word, "nevermind");
 			}
-
 			strcat(result, word);
 		} else {
 			result[strlen(result)] = buffer[i];
@@ -53,10 +48,8 @@ void translate(char* buffer){
 		i++;
 	}
 	result[strlen(result)] = '\0';
-
 	strcpy(buffer, result);
 }
-
 int main(){ 
 	int sock_fd = socket(AF_INET, SOCK_DGRAM, 0);
 	if(sock_fd < 0){
@@ -67,7 +60,6 @@ int main(){
 	socklen_t client_len = sizeof(client_addr);
 
 	printf("Enter port: "); scanf("%d", &port);
-
 	char buffer[1024];
 	address.sin_family = AF_INET;
 	address.sin_port = htons(port);
@@ -78,35 +70,23 @@ int main(){
 		close(sock_fd);
 		return 1;
 	}
-
 	printf("\nWaiting for Client....\n");
-
 	memset(buffer, 0, sizeof(buffer));
-
 	recvfrom(sock_fd, buffer, BUFFER_SIZE, 0,
                  (struct sockaddr *)&client_addr, &client_len);
-
 	printf("\nMessage from client: %s\n", buffer);
-
 	sendto(sock_fd, "Hello from server", 17, 0,
                (struct sockaddr *)&client_addr, client_len);
-
 	memset(buffer, 0, sizeof(buffer));
-
 	recvfrom(sock_fd, buffer, BUFFER_SIZE, 0,
                  (struct sockaddr *)&client_addr, &client_len);
-
 	printf("\nMessage from client: \"%s\"\n", buffer);
 
 	translate(buffer);
 	buffer[strlen(buffer)] = '\0';
-
 	printf("\nTranslated message sent to client: \"%s\"\n", buffer);
-
 	sendto(sock_fd, buffer, strlen(buffer) + 1, 0,
                (struct sockaddr *)&client_addr, client_len);
-
 	close(sock_fd);
-
 	printf("\nClient disconnected...\n");
 }
