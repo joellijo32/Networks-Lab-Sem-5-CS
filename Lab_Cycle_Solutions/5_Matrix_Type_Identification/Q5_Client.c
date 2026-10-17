@@ -9,7 +9,6 @@
 #include <time.h>
 
 int port;
-
 void fillLower(int n, int matrix[][n]);
 void fillDiagonal(int n, int matrix[][n]);
 void fillUpper(int n, int matrix[][n]);
@@ -26,7 +25,6 @@ void fillUpper(int n, int matrix[][n]) {
         }
     }
 }
-
 void fillLower(int n, int matrix[][n]) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
@@ -37,7 +35,6 @@ void fillLower(int n, int matrix[][n]) {
         }
     }
 }
-
 void fillDiagonal(int n, int matrix[][n]) {
     for (int i = 0; i < n; i++) {
         for (int j = 0; j < n; j++) {
@@ -48,10 +45,8 @@ void fillDiagonal(int n, int matrix[][n]) {
         }
     }
 }
-
 void fillRandom(int n, int matrix[][n]) {
     int choose = rand() % 3;
-
     if (choose == 0)
         fillUpper(n, matrix);
     else if (choose == 1)
@@ -59,7 +54,6 @@ void fillRandom(int n, int matrix[][n]) {
     else
         fillDiagonal(n, matrix);
 }
-
 void display(int n, int matrix[][n]) {
     printf("\n");
     for (int i = 0; i < n; i++) {
@@ -69,26 +63,20 @@ void display(int n, int matrix[][n]) {
         printf("\n");
     }
 }
-
 int main() {
-
     int sockFD = socket(AF_INET, SOCK_STREAM, 0);
-
     if (sockFD < 0) {
         perror("Socket creation failed");
         return 1;
     }
 
     struct sockaddr_in address;
-
     printf("Enter Port: "); scanf("%d", &port);
-
     address.sin_family = AF_INET;
     address.sin_port = htons(port);
     address.sin_addr.s_addr = inet_addr("127.0.0.1");
 
     int status = connect(sockFD, (struct sockaddr *)&address, sizeof(address));
-
     if (status < 0) {
         perror("Connection failed");
         close(sockFD);
@@ -96,37 +84,27 @@ int main() {
     }
 
     printf("Connection was successful...\n");
-
     char buffer[1024] = "Hello from client";
-
     send(sockFD, buffer, strlen(buffer), 0);
-
     memset(buffer, 0, sizeof(buffer));
-
     read(sockFD, buffer, sizeof(buffer));
-
     printf("Message from Server: %s\n", buffer);
-
     memset(buffer, 0, sizeof(buffer));
 
     srand(time(NULL));
     printf("Enter N = "); int n;
     scanf("%d", &n);
-
     int matrix[n][n];
     fillRandom(n, matrix);
 
     printf("\nMatrix Sent from Client: \n");
     display(n, matrix);
-
     send(sockFD, &n, sizeof(n), 0);
     send(sockFD, matrix, sizeof(matrix), 0);
-
     char output[1024];
     read(sockFD, output, sizeof(output));
     printf("\nMessage from Server: %s\n", output);
 
     close(sockFD);
-
     return 0;
 }

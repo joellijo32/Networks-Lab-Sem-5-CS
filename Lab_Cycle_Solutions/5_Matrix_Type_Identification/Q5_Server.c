@@ -5,7 +5,6 @@
 #include <arpa/inet.h>
 
 int port;
-
 int checkMatrix(int n, int matrix[][n]){
 	int isUpper = 1, isLower = 1, isDiagonal = 1;
 	for(int i = 0; i < n; i++){
@@ -19,7 +18,6 @@ int checkMatrix(int n, int matrix[][n]){
 	else if(isUpper) return 0;
 	else if(isLower) return 1;
 }
-
 void display(int n, int matrix[][n]) {
 	for (int i = 0; i < n; i++) {
 		for (int j = 0; j < n; j++) {
@@ -27,10 +25,8 @@ void display(int n, int matrix[][n]) {
 		} printf("\n");
 	}
 }
-
 int main() {
     int sockFD = socket(AF_INET, SOCK_STREAM, 0);
-
     if (sockFD < 0) {
         perror("Socket creation failed");
         return 1;
@@ -38,9 +34,7 @@ int main() {
 
     struct sockaddr_in address, client;
     socklen_t len = sizeof(client);
-
     printf("Enter Port: "); scanf("%d", &port);
-
     char buffer[1024];
     address.sin_family = AF_INET;
     address.sin_port = htons(port);
@@ -51,50 +45,36 @@ int main() {
         close(sockFD);
         return 1;
     }
-
     listen(sockFD, 5);
-
     printf("Waiting for client...\n");
-
     int newsock = accept(sockFD, (struct sockaddr *)&client, &len);
-
     if (newsock < 0) {
         perror("Accept failed");
         close(sockFD);
         return 1;
     }
-
     memset(buffer, 0, sizeof(buffer));
 
     read(newsock, buffer, sizeof(buffer));
-
     printf("Message: %s\n", buffer);
-
     send(newsock, "Hello from server", 17, 0);
-
     int n;
     read(newsock, &n, sizeof(n));
     int matrix[n][n];
     read(newsock, &matrix, sizeof(matrix));
 
     printf("\nMatrix recieved from Client:\n");
-
     display(n, matrix);
-
     int result = checkMatrix(n, matrix);
     char output[1024];
-
     if(result == 0) strcpy(output, "Upper Triangle Matrix");
     else if(result == 1) strcpy(output, "Lower Triangle Matrix");
     else strcpy(output,"Diagonal Matrix");
     printf("\nSending output: \"%s\" to Client\n", output);
 
     send(newsock, output, strlen(output), 0);
-
     close(newsock);
     close(sockFD);
-
     printf("\nClient disconnected...\n");
-
     return 0;
 }
