@@ -35,10 +35,8 @@ int main() {
     }
     addr.sin_family = AF_INET;
     addr.sin_port = htons(PORT);
-    if (inet_pton(AF_INET, "127.0.0.1", &addr.sin_addr) <= 0) {
-        perror("Invalid address");
-        exit(1);
-    }
+    addr.sin_addr.s_addr = INADDR_ANY;
+
     if (connect(sock, (struct sockaddr*) &addr, sizeof(addr)) < 0) {
         perror("Connect failed");
         exit(1);
