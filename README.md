@@ -3,7 +3,7 @@
 Computer Networks Lab coursework for Semester 5 (CS). This repository contains lab cycle solutions and manuals for the networking lab.
 
 > For Packet Tracer Questions 13 - 17, the `.pkt` files are compatible for Packet Tracer version: `8.2.2+`.       
-> The [17th question](https://github.com/joellijo32/Networks-Lab-Sem-5-CS/tree/main/Lab_Cycle_Solutions/17_IPv6_Network) is just a 'dummy' implementation, not the intented solution (required cloud module not available in the packet tracer version)
+> The [17th question](https://github.com/joellijo32/Networks-Lab-Sem-5-CS/tree/main/Lab_Cycle_Solutions/17_IPv6_Network) is just a 'dummy' implementation, not the intended solution (required cloud module not available in the packet tracer version)
 
 ## Repository Structure
 
