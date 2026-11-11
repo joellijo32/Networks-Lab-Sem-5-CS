@@ -2,9 +2,6 @@
 #include <stdlib.h>
 #include <arpa/inet.h>
 #include <string.h>
-#include <sys/types.h>
-#include <sys/socket.h>
-#include <netinet/in.h>
 #include <ctype.h>
 #include <unistd.h>
 #include <time.h>
