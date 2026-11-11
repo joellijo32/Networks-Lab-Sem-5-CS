@@ -37,6 +37,7 @@ void handle_client(int client_sock) {
     close(client_sock);
     exit(0); 
 }
+
 int main() {
     int server_sock, client_sock;
     struct sockaddr_in server_addr, client_addr;
