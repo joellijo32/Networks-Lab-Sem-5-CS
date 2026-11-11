@@ -3,7 +3,6 @@
 #include <unistd.h>
 #include <string.h>
 #include <ctype.h>
-#include <sys/socket.h>
 
 #define BUFFER_SIZE 1024
 int port;
